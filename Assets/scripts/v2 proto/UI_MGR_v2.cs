@@ -31,7 +31,7 @@ public class UI_MGR_v2 : MonoBehaviour
     {
         string display_string = "";
 
-        foreach(Resource_Inventory.Resource_Attributes ra in Resource_Inventory.resource_inventory)
+        foreach(Resource_Attributes ra in Resource_Inventory.resource_inventory)
         {
             display_string += "[" + ra.resource_type.ToString() + ": " + ra.resource_amount.ToString() + "] ";
         }

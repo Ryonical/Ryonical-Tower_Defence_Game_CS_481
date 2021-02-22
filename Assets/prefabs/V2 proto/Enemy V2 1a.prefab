@@ -108,12 +108,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resource_kill_award:
   - {fileID: 5994096026882669570, guid: cd91af7d5970c5748ab00d97a93b31e7, type: 3}
-  - {fileID: 5994096026882669570, guid: cd91af7d5970c5748ab00d97a93b31e7, type: 3}
   waypoints_list: {fileID: 0}
   speed_max: 7
   hp_max: 4
   current_hp: 0
   current_speed: 0
   spawn_delay: 0
-  spawn_cooldown: 1.5
+  spawn_cooldown: 0.4
   cur_waypoint_index: 0

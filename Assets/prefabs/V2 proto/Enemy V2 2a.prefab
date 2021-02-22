@@ -106,12 +106,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cc0e3ec90ab5794baf2a4f336f03fcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resource_kill_award: []
+  resource_kill_award:
+  - {fileID: 5994096026882669570, guid: cd91af7d5970c5748ab00d97a93b31e7, type: 3}
+  - {fileID: 5994096026882669570, guid: cd91af7d5970c5748ab00d97a93b31e7, type: 3}
+  - {fileID: 5994096026882669570, guid: cd91af7d5970c5748ab00d97a93b31e7, type: 3}
+  - {fileID: 5994096026882669570, guid: cd91af7d5970c5748ab00d97a93b31e7, type: 3}
   waypoints_list: {fileID: 0}
-  speed_max: 5
-  hp_max: 9
+  speed_max: 4
+  hp_max: 13
   current_hp: 0
   current_speed: 0
   spawn_delay: 0
-  spawn_cooldown: 2.5
+  spawn_cooldown: 0.5
   cur_waypoint_index: 0
