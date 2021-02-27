@@ -11,6 +11,10 @@ GameObject:
   - component: {fileID: 7992758190015589475}
   - component: {fileID: 1545709259229247208}
   - component: {fileID: 7530195310571508990}
+  - component: {fileID: 9220958956186614574}
+  - component: {fileID: 2586711325684634734}
+  - component: {fileID: 2836303875596416471}
+  - component: {fileID: 7017206708442914833}
   m_Layer: 0
   m_Name: tower 1a
   m_TagString: Untagged
@@ -45,6 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa6d5d1a7a193814d80c1e3ea292e029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selection_options_list: {fileID: 2586711325684634734}
   tower_name: tower 1a
   price_list:
   - {fileID: 7530195310571508990}
@@ -68,6 +73,66 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resource_type: 1
   resource_amount: 35
+--- !u!136 &9220958956186614574
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7983773788165955369}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1
+  m_Height: 5
+  m_Direction: 1
+  m_Center: {x: 0, y: 2, z: 0}
+--- !u!114 &2586711325684634734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7983773788165955369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f179baee6e73e745808ddf70c2b578d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  options_list:
+  - {fileID: 2836303875596416471}
+  - {fileID: 7017206708442914833}
+  list_id: tower_1a
+--- !u!114 &2836303875596416471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7983773788165955369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fe6a8378fa0efa489d66733d5142bf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  option_name: 'option 1 '
+  hotkey_name: Z
+  option_tooltip: testing
+--- !u!114 &7017206708442914833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7983773788165955369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fe6a8378fa0efa489d66733d5142bf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  option_name: 'option2 '
+  hotkey_name: X
+  option_tooltip: testing 2
 --- !u!1 &9026381739287507784
 GameObject:
   m_ObjectHideFlags: 0
@@ -80,6 +145,8 @@ GameObject:
   - component: {fileID: 7981641812932888019}
   - component: {fileID: 5179097916796866337}
   - component: {fileID: 5641392237967425502}
+  - component: {fileID: 5388214030488800016}
+  - component: {fileID: 6179213225355420841}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -157,8 +224,38 @@ CapsuleCollider:
   m_GameObject: {fileID: 9026381739287507784}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5000001
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &5388214030488800016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9026381739287507784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f179baee6e73e745808ddf70c2b578d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  options_list:
+  - {fileID: 6179213225355420841}
+  list_id: 
+--- !u!114 &6179213225355420841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9026381739287507784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fe6a8378fa0efa489d66733d5142bf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  option_name: Debug Option
+  hotkey_name: A
+  option_tooltip: Honestly i doubt we're gonna get this far
