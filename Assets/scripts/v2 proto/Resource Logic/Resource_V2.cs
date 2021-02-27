@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +17,8 @@ public class Resource_V2 : MonoBehaviour
     public static event System.EventHandler<AddResourceArgs> AddResourceEvent;
     #endregion
     #region MEMBERS 
+    private static float resource_time_until_autopickup = 2.25f;
+    private static float pickup_message_duration = 1.25f;
     public ResourceType resource_name;
     public int resource_amount;
     public Rigidbody attached_rigidbody;
@@ -65,23 +68,28 @@ public class Resource_V2 : MonoBehaviour
 
     private void OnMouseOver()
     {
-        KillResource();
+        //KillResource();
     }
 
     private void KillResource()
     {
         StopAllCoroutines();
+        ResourceCollectTextBalloon();
         CollectResourceEvent?.Invoke(this, new ResourceV2Args(this));
         AddResourceEvent?.Invoke(this, new AddResourceArgs(resource_amount, resource_name));
         OnDespawn?.Invoke(this, new ResourceV2Args(this));
         Destroy( gameObject );
     }
+    //TODO: 
+    private void ResourceCollectTextBalloon()
+    {
+        string msg = "+" + resource_amount.ToString() + " " + GetResourceTypeString(resource_name);
+        Text_Bubble.CreateTemporaryTextBubble(msg, pickup_message_duration, gameObject.transform.position);
+    }
 
     IEnumerator AutoPickupTimer()
     {
-        yield return new WaitForSeconds(5f);
-
-
+        yield return new WaitForSeconds(resource_time_until_autopickup);
         KillResource();
     }
 }

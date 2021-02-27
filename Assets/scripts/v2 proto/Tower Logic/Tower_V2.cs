@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq; //Added by Jared Freeman
 
 public class Tower_V2 : MonoBehaviour
 {
@@ -14,8 +15,13 @@ public class Tower_V2 : MonoBehaviour
     public static event System.EventHandler<TowerV2RefEventArgs> TowerClickedEvent;
     #endregion
     #region MEMBERS
+    [Header("Add a selection options list here")]
+    public Selection_Option_List selection_options_list; //welp honestly this works so i guess itll have to do
+
     //prefab stats
     public string tower_name;
+    [Header("Simply create Resource Attributes components and add them to the list.")]
+    [Header("Avoid duplicating resource types!")]
     public List<Resource_Attributes> price_list;
     public float attack_cooldown_default;
     [Min(0f)]
@@ -39,6 +45,8 @@ public class Tower_V2 : MonoBehaviour
         current_attack_priority = AttackPriority.hp_lowest;
         StartAttacking();
 
+        //AttachResourceAttributes();
+
         OnSpawn?.Invoke(this, new TowerV2RefEventArgs(this) );
     }
     #endregion
@@ -47,6 +55,19 @@ public class Tower_V2 : MonoBehaviour
     {
         Debug.Log("Tower ID: " + gameObject.ToString() + " was clicked!");
         TowerClickedEvent?.Invoke(this, new TowerV2RefEventArgs(this));
+    }
+    
+    //ISSUE: This will not execute prior to when resources are checked
+    void AttachResourceAttributes()
+    {
+        price_list.Clear(); //make sure this is empty to prevent duplication of refs
+
+        List<Resource_Attributes> ra_list = GetComponents<Resource_Attributes>().ToList<Resource_Attributes>();
+
+        foreach(Resource_Attributes ra in ra_list)
+        {
+            price_list.Add(ra);
+        }
     }
 
     public void StartAttacking()

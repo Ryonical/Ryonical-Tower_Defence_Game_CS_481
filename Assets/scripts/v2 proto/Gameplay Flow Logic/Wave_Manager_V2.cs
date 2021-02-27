@@ -13,12 +13,10 @@ public class Wave_Manager_V2 : MonoBehaviour
     #region MEMBERS
     //list of list of prefabs
     public List<Wave_V2> wave_list;
-
-    [SerializeField]
+    
     private static bool flag_wave_in_progress;
-
-    [SerializeField]
     private int cur_wave_index = 0;
+
     #endregion
     #region EVENT SUBSCRIPTION
     void OnEnable()
@@ -36,6 +34,9 @@ public class Wave_Manager_V2 : MonoBehaviour
         flag_wave_in_progress = false;
     }
     #endregion
+
+    public int GetCurrentWaveIndex() { return cur_wave_index; }
+    public int GetCurrentWaveCount() { return cur_wave_index + 1; }
 
     void StartWave()
     {

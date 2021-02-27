@@ -67,6 +67,22 @@ public class Camera_Controller : MonoBehaviour
         flag_camera_size_in_use = false;
     }
     #endregion
+    #region EVENT SUBSCRIPTIONS
+    private void OnEnable()
+    {
+        Text_Bubble.RequestAlignToCameraAnglesEvent += CopyRotationToGameObject;
+    }
+    private void OnDisable()
+    {
+        Text_Bubble.RequestAlignToCameraAnglesEvent -= CopyRotationToGameObject;
+    }
+    #endregion
+    #region EVENT HANDLERS
+    void CopyRotationToGameObject(object caller, MonobehaviourEventArgs args)
+    {
+        args.mono.gameObject.transform.rotation = gameObject.transform.rotation;
+    }
+    #endregion
 
     private void Update()
     {
@@ -95,8 +111,12 @@ public class Camera_Controller : MonoBehaviour
         transform.position += transform.right * in_x * input_movement_speed_max * Time.deltaTime;
         transform.position += Vector3.Normalize(Vector3.ProjectOnPlane(transform.forward, Vector3.up)) * in_y * input_movement_speed_max * Time.deltaTime;
 
-        cam.orthographicSize -= in_scroll * input_scroll_speed_max * Time.deltaTime; //inverting this w/ -= gives us "forward scroll to zoom in" functionality
-        cam.orthographicSize = Mathf.Clamp(cam.orthographicSize, camera_size_min, camera_size_max);
+        //maybe check for flag earlier in logic
+        if (!flag_camera_size_in_use)
+        {
+            cam.orthographicSize -= in_scroll * input_scroll_speed_max * Time.deltaTime; //inverting this w/ -= gives us "forward scroll to zoom in" functionality
+            cam.orthographicSize = Mathf.Clamp(cam.orthographicSize, camera_size_min, camera_size_max);
+        }
     }
 
     private void GetInputAxes()
@@ -132,7 +152,7 @@ public class Camera_Controller : MonoBehaviour
         while ( Mathf.Abs(desired_size - cam.orthographicSize) > tolerance)
         {
             float time_cur = Time.time;
-            float remapped = MapValueFromRangeToRange((time_cur - time_start), 0f, glide_duration, 0f, 1f);
+            float remapped = Freeman_Utilities.MapValueFromRangeToRange((time_cur - time_start), 0f, glide_duration, 0f, 1f);
 
             cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, desired_size, remapped);
 
@@ -160,7 +180,7 @@ public class Camera_Controller : MonoBehaviour
             float remapped = Mathf.Lerp(0, 1, normal);
             */
 
-            float remapped = MapValueFromRangeToRange((time_cur - time_start), 0f, glide_duration, 0f, 1f);
+            float remapped = Freeman_Utilities.MapValueFromRangeToRange((time_cur - time_start), 0f, glide_duration, 0f, 1f);
 
             //now we use the lerp param we just calculated
             transform.position = Vector3.Lerp(transform.position, target, remapped);
@@ -171,10 +191,12 @@ public class Camera_Controller : MonoBehaviour
         flag_camera_in_use = false; //unlock camera movement
     }
 
+    /* MOVED TO FREEMAN_UTILITIES CLASS
     //better in placed a library we make but OH WELL I GUESS
     float MapValueFromRangeToRange(float val_a, float range_a_start, float range_a_end, float range_b_start, float range_b_end)
     {
         float normal = Mathf.InverseLerp(range_a_start, range_a_end, val_a);
         return Mathf.Lerp(range_b_start, range_b_end, normal);
     }
+    */
 }

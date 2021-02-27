@@ -35,10 +35,10 @@ public class Resource_Confetti : MonoBehaviour
             resource_spawned.attached_rigidbody.AddForce(new Vector3(
                 Random.Range(-1f, 1f)
                 , Random.Range(-1f, 1f)
-                , Random.Range(.3f, .66f)
+                , Random.Range(.6f, .9f)
                 ) * 55f, ForceMode.Impulse);
 
-            yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(.2f);
         }
 
         KillConfetti();

@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class MonobehaviourEventArgs : System.EventArgs
 {
-    MonoBehaviour mono;
+    public MonoBehaviour mono;
 
     public MonobehaviourEventArgs(MonoBehaviour mo)
     {

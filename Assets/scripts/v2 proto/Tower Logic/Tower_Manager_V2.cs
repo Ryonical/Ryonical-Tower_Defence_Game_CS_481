@@ -12,10 +12,12 @@ public class Tower_Manager_V2 : MonoBehaviour
     #region MEMBERS
     //tower instances spawned during gameplay
     public static List<Tower_V2> tower_list;
+
     //tower prefabs. Uses a helper list to load the static list during runtime
     [Header("ADD TOWER PREFABS HERE")]
     public List<Tower_V2> tower_prefabs_initializer;
     public static List<Tower_V2> tower_prefabs;
+
     #endregion
     #region INIT
     private void Awake()
@@ -34,6 +36,10 @@ public class Tower_Manager_V2 : MonoBehaviour
                 //Debug.Log("Tower prefab ID: " + tow.gameObject.ToString() + " initialized successfully.");
             }
         }
+    }
+    private void Start()
+    {
+        InitializePrefabTowerSelectOptionsToDictionary();
     }
     #endregion
     #region EVENT SUBSCRIPTIONS
@@ -68,4 +74,9 @@ public class Tower_Manager_V2 : MonoBehaviour
         return tower_prefabs;
     }
 
+    //the best method name :)
+    private void InitializePrefabTowerSelectOptionsToDictionary()
+    {
+        //Idea: Toss the tower selection options into the dictionary, then discard the list so prefab doesn't instantiate with that garbage
+    }
 }

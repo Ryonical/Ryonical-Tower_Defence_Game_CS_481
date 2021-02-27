@@ -55,7 +55,7 @@ public class Resource_Inventory : MonoBehaviour
                 //Resource_Attributes temp = resource_inventory.Find(x => x.resource_type == rsc_t);
                 //Debug.Log("Init Resource_Attributes to Inv: " + temp.resource_type.ToString() + " " + temp.resource_amount.ToString());
             }
-            Debug.Log("Resource Inventory init successfully!");
+            //Debug.Log("Resource Inventory init successfully!");
         }
     }
     #endregion
@@ -75,7 +75,7 @@ public class Resource_Inventory : MonoBehaviour
         return temp;
     }
 
-    public int GetResourceAmount(Resource_V2.ResourceType type)
+    public static int GetResourceAmount(Resource_V2.ResourceType type)
     {
         Resource_Attributes temp = FindResourceAttribute(type);
         return temp.resource_amount;
@@ -102,7 +102,7 @@ public class Resource_Inventory : MonoBehaviour
 
     //TODO: Towers cost a LIST of resources. This ain't gonna work. Refactor to accept param Resource_Attributes instead of this garbage!
     //Tries to take the amount of resources asked out of the inventory. Return bool indicates success/failure
-    public static bool TryTakeResources(Resource_V2.ResourceType type, int amount)
+    public static bool TryTakeResource(Resource_V2.ResourceType type, int amount)
     {
         Resource_Attributes temp = FindResourceAttribute(type);
         if(temp.resource_amount >= amount)
@@ -113,16 +113,46 @@ public class Resource_Inventory : MonoBehaviour
         }
         else return false;
     }
-    //take 2
-    public static bool TryTakeResources(Resource_Attributes attributes, int amount)
+
+    public static bool TryTakeResource(Resource_Attributes attributes)
     {
-        Resource_Attributes temp = FindResourceAttribute(attributes.resource_type);
-        if (temp.resource_amount >= amount)
+        Resource_Attributes inventory_ra = FindResourceAttribute(attributes.resource_type);
+        if (inventory_ra.resource_amount >= attributes.resource_amount)
         {
             //no need to clamp
-            temp.resource_amount -= amount;
+            inventory_ra.resource_amount -= attributes.resource_amount;
             return true;
         }
         else return false;
+    }
+    public static bool TryTakeResources(List<Resource_Attributes> take_list)
+    {
+        if (CheckResourcesAvailable(take_list))
+        {
+            foreach (Resource_Attributes ra in take_list)
+            {
+                if (TryTakeResource(ra)) //method should fully handle taking the resource at this point; otherwise we have a bug somewhere...
+                {
+                }
+                else
+                {
+                    Debug.LogError("Resource_Inventory.cs: Took more of a resource than in inventory! This is an internal script bug!");
+                }
+            }
+            return true;
+        }
+        else return false;
+    }
+
+    public static bool CheckResourcesAvailable(List<Resource_Attributes> check_list)
+    {
+        foreach(Resource_Attributes ra in check_list)
+        {
+            if(GetResourceAmount(ra.resource_type) < ra.resource_amount)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }

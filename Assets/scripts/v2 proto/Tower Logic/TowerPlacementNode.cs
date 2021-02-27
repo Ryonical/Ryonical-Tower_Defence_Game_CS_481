@@ -6,6 +6,8 @@ public class TowerPlacementNode : MonoBehaviour
 {
     #region EVENTS
     public static event System.EventHandler<TowerPlaceSelectEventArgs> TowerNodeSelectEvent;
+    public static event System.EventHandler<TowerPlaceSelectEventArgs> NodeMouseEnterEvent;
+    public static event System.EventHandler<TowerPlaceSelectEventArgs> NodeMouseExitEvent;
     #endregion
     #region EVENT SUBSCRIPTIONS
     private void OnEnable()
@@ -14,7 +16,7 @@ public class TowerPlacementNode : MonoBehaviour
     }
     private void OnDisable()
     {
-        
+        Tower_V2.OnDespawn -= DetachTower;
     }
     #endregion
     #region MEMBERS
@@ -24,6 +26,19 @@ public class TowerPlacementNode : MonoBehaviour
     private void OnMouseDown()
     {
         TowerNodeSelectEvent?.Invoke(this, new TowerPlaceSelectEventArgs(transform, this) );
+    }
+    private void OnMouseEnter()
+    {
+        NodeMouseEnterEvent?.Invoke(this, new TowerPlaceSelectEventArgs(transform, this));
+    }
+    private void OnMouseExit()
+    {
+        NodeMouseExitEvent?.Invoke(this, new TowerPlaceSelectEventArgs(transform, this));
+    }
+
+    public bool IsOccupied()
+    {
+        return (attached_tower != null) ;
     }
 
     //Tries to attach tower to this node. Will return false if there is already a tower at this node.

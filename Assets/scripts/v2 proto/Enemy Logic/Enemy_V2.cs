@@ -34,14 +34,6 @@ public class Enemy_V2 : MonoBehaviour
     private int cur_waypoint_index; //index of the current waypoint we are going toward
     #endregion
     #region EVENT SUBSCRIPTIONS
-    private void OnEnable()
-    {
-
-    }
-    private void OnDisable()
-    {
-        
-    }
     #endregion
     #region EVENTS
     public static event System.EventHandler<EnemyV2RefEventArgs> OnRequestWaypointList;
