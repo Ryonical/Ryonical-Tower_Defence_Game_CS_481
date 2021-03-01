@@ -25,21 +25,25 @@ public class Tower_Manager_V2 : MonoBehaviour
         //init active towers list
         if (tower_list == null)
             tower_list = new List<Tower_V2>();
-
-        //init + convert our inspector list to a static list
+        else
+        {
+            tower_list.Clear();
+        }
+        //init prefabs static list
         if (tower_prefabs == null)
         {
             tower_prefabs = new List<Tower_V2>();
-            foreach (Tower_V2 tow in tower_prefabs_initializer)
-            {
-                tower_prefabs.Add(tow);
-                //Debug.Log("Tower prefab ID: " + tow.gameObject.ToString() + " initialized successfully.");
-            }
         }
-    }
-    private void Start()
-    {
-        InitializePrefabTowerSelectOptionsToDictionary();
+        else
+        {
+            tower_prefabs.Clear();
+        }
+
+        foreach (Tower_V2 tow in tower_prefabs_initializer)
+        {
+            tower_prefabs.Add(tow);
+            //Debug.Log("Tower prefab ID: " + tow.gameObject.ToString() + " initialized successfully.");
+        }
     }
     #endregion
     #region EVENT SUBSCRIPTIONS
@@ -74,9 +78,4 @@ public class Tower_Manager_V2 : MonoBehaviour
         return tower_prefabs;
     }
 
-    //the best method name :)
-    private void InitializePrefabTowerSelectOptionsToDictionary()
-    {
-        //Idea: Toss the tower selection options into the dictionary, then discard the list so prefab doesn't instantiate with that garbage
-    }
 }

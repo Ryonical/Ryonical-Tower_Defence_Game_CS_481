@@ -35,7 +35,7 @@ public class Resource_Inventory : MonoBehaviour
         if (temp != null)
             temp.resource_amount += args.resource_amount;
 
-        PrintResourceInventory();
+        //PrintResourceInventory();
     }
     #endregion
     #region INIT
@@ -44,18 +44,30 @@ public class Resource_Inventory : MonoBehaviour
         if(resource_inventory == null)
         {
             resource_inventory = new List<Resource_Attributes>();
-            foreach (Resource_V2.ResourceType rsc_t in System.Enum.GetValues(typeof(Resource_V2.ResourceType)))
-            {
-                Resource_Attributes temp = gameObject.AddComponent<Resource_Attributes>();
-                temp.resource_type = rsc_t;
-                temp.resource_amount = 0;
-                resource_inventory.Add(temp);
-
-                //Debug logging stuff
-                //Resource_Attributes temp = resource_inventory.Find(x => x.resource_type == rsc_t);
-                //Debug.Log("Init Resource_Attributes to Inv: " + temp.resource_type.ToString() + " " + temp.resource_amount.ToString());
-            }
+            
             //Debug.Log("Resource Inventory init successfully!");
+        }
+        else
+        {
+            resource_inventory.Clear();
+        }
+
+        foreach (Resource_V2.ResourceType rsc_t in System.Enum.GetValues(typeof(Resource_V2.ResourceType)))
+        {
+            Resource_Attributes temp = FindResourceAttribute(rsc_t);
+
+            if (temp == null)
+            {
+                temp = gameObject.AddComponent<Resource_Attributes>();
+                resource_inventory.Add(temp);
+            }
+
+            temp.resource_type = rsc_t;
+            temp.resource_amount = 0;
+
+            //Debug logging stuff
+            //Resource_Attributes temp = resource_inventory.Find(x => x.resource_type == rsc_t);
+            //Debug.Log("Init Resource_Attributes to Inv: " + temp.resource_type.ToString() + " " + temp.resource_amount.ToString());
         }
     }
     #endregion
@@ -69,7 +81,7 @@ public class Resource_Inventory : MonoBehaviour
             if (ra.resource_type == type)
             {
                 temp = ra;
-                break;
+                return temp;
             }
         }
         return temp;
@@ -81,22 +93,29 @@ public class Resource_Inventory : MonoBehaviour
         return temp.resource_amount;
     }
     //sets resource_amount of type argument to amount argument
-    public void SetResourceAmount(Resource_V2.ResourceType type, int amount)
+    public static void SetResourceAmount(Resource_V2.ResourceType type, int amount)
     {
         Resource_Attributes temp = FindResourceAttribute(type);
         temp.resource_amount = amount;
     }
     //will add argument amount to the resource_amount of type argument
-    public void AppendResourceAmount(Resource_V2.ResourceType type, int amount)
+    public static void AppendResourceAmount(Resource_V2.ResourceType type, int amount)
     {
         Resource_Attributes temp = FindResourceAttribute(type);
         temp.resource_amount += amount;
     }
-    public void PrintResourceInventory()
+    public static void AddResourcesToInventory(List<Resource_Attributes> ras_to_add)
+    {
+        foreach (Resource_Attributes ra in ras_to_add)
+        {
+            AppendResourceAmount(ra.resource_type, ra.resource_amount);
+        }
+    }
+    public static void PrintResourceInventory()
     {
         foreach(Resource_Attributes ra in resource_inventory)
         {
-            //Debug.Log("rsc: " + ra.resource_type.ToString() + ": " + ra.resource_amount.ToString());
+            Debug.Log("rsc: " + ra.resource_type.ToString() + ": " + ra.resource_amount.ToString());
         }
     }
 
@@ -113,7 +132,6 @@ public class Resource_Inventory : MonoBehaviour
         }
         else return false;
     }
-
     public static bool TryTakeResource(Resource_Attributes attributes)
     {
         Resource_Attributes inventory_ra = FindResourceAttribute(attributes.resource_type);
@@ -141,8 +159,29 @@ public class Resource_Inventory : MonoBehaviour
             }
             return true;
         }
-        else return false;
+        else
+        {
+            return false;
+        }
     }
+
+    public static void RemoveLives(int lives)
+    {
+        if (lives <= 0) return; //someone is trying to goof my system!!! I ain't gonna have it...
+
+        Resource_Attributes cur_lives_attribute = FindResourceAttribute(Resource_V2.ResourceType.lives);
+
+        if(cur_lives_attribute.resource_amount > lives)
+        {
+            cur_lives_attribute.resource_amount -= lives;
+        }
+        else
+        {
+            cur_lives_attribute.resource_amount = 0;
+            GameOverHandler.DoGameOver();
+        }
+    }
+
 
     public static bool CheckResourcesAvailable(List<Resource_Attributes> check_list)
     {

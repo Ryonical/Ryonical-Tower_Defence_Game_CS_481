@@ -4,14 +4,25 @@ using UnityEngine;
 
 public class Resource_Confetti : MonoBehaviour
 {
-    //ctors
+    //members
+    public List<Resource_V2> resource_list;
+
+    /*
+    //ctors WAIT THIS AINT GONNA WORK (monobehaviors dont allow constructors)
     public Resource_Confetti(List<Resource_V2> list)
     {
         resource_list = list;
     }
+    */
 
-    //members
-    public List<Resource_V2> resource_list;
+    public static void SpawnConfetti(List<Resource_V2> list, Vector3 location)
+    {
+        GameObject goj = new GameObject("Resource Confetti");
+        goj.transform.position = location;
+        Resource_Confetti conf = goj.AddComponent<Resource_Confetti>();
+        conf.resource_list = list;
+    }
+
 
     private void Start()
     {

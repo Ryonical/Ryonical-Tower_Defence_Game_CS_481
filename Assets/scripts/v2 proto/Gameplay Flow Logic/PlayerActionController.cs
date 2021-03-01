@@ -17,7 +17,7 @@ public static class PlayerActionController
 
     public static bool PlayerActionAvailable()
     {
-        Debug.Log("Player Action available is " + (!flag_player_channeling_action).ToString());
+        //Debug.Log("Player Action available is " + (!flag_player_channeling_action).ToString());
         return flag_player_channeling_action == false;
     }
 
@@ -30,7 +30,7 @@ public static class PlayerActionController
         }
         else
         {
-            Debug.LogError("PlayerActionController: Class Started a player action while another one is active!");
+            //Debug.LogError("PlayerActionController: Class Started a player action while another one is active!");
         }
     }
     public static void EndPlayerAction()

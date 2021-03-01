@@ -18,6 +18,7 @@ public class Enemy_V2 : MonoBehaviour
     public waypoints waypoints_list;
 
     //prefab stats
+    public string enemy_name;
     [Min(.01f)]
     public float speed_max;
     [Min(1f)]
@@ -28,6 +29,8 @@ public class Enemy_V2 : MonoBehaviour
     // spawn characteristics
     public float spawn_delay; //sec     time before this enemy can spawn
     public float spawn_cooldown; //sec  time added before next spawn can occur
+    [Min(1)]
+    public int damage_to_player; //aka how many lives to take away from player
 
     //utility
     [SerializeField]
@@ -39,7 +42,6 @@ public class Enemy_V2 : MonoBehaviour
     public static event System.EventHandler<EnemyV2RefEventArgs> OnRequestWaypointList;
     public static event System.EventHandler<EnemyV2RefEventArgs> OnDespawn;
     public static event System.EventHandler<EnemyV2RefEventArgs> OnSpawn;
-
     public static event System.EventHandler<EnemyV2RefEventArgs> DamagePlayerEvent;
     #endregion
     #region INIT
@@ -61,7 +63,7 @@ public class Enemy_V2 : MonoBehaviour
         }
         else
         {
-            Debug.Log("Enemy ID " + this.gameObject.ToString() + ": waypoint list not connected! Destroying!");
+            Debug.LogError("Enemy ID " + this.gameObject.ToString() + ": waypoint list not connected! Destroying!");
             Destroy(this);
         }
 
@@ -73,6 +75,9 @@ public class Enemy_V2 : MonoBehaviour
     public void ApplyDamage(float damage)
     {
         current_hp -= damage;
+
+        //hit number
+        Text_Bubble.CreateTemporaryTextBubble(damage.ToString(), .75f, transform.position, new Color(1f, .01f, .01f, .85f)); //a transparentish red
 
         //check for death
         if (current_hp <= 0)
@@ -89,6 +94,19 @@ public class Enemy_V2 : MonoBehaviour
     public void StopMoving()
     {
         StopCoroutine(ContinueMoving());
+    }
+
+    public int GetCurrentWaypointIndex()
+    {
+        return cur_waypoint_index;
+    }
+    public float GetSquareDistanceToNextWaypoint()
+    {
+        return (waypoints_list.waypoint_list[cur_waypoint_index].transform.position - transform.position).sqrMagnitude;
+    }
+    public float GetDistanceToNextWaypoint()
+    {
+        return (waypoints_list.waypoint_list[cur_waypoint_index].transform.position - transform.position).magnitude;
     }
 
     private void HandleDeath()
@@ -111,6 +129,8 @@ public class Enemy_V2 : MonoBehaviour
     private void DamagePlayer()
     {
         Debug.Log("Enemy: Damage player event");
+        Resource_Inventory.RemoveLives(damage_to_player);
+        Text_Bubble.CreateTemporaryTextBubble("-" + damage_to_player.ToString(), 3f, transform.position, Color.red);
         DamagePlayerEvent?.Invoke(this, new EnemyV2RefEventArgs(this));
     }
     private void Kill()

@@ -11,6 +11,7 @@ public class Text_Bubble : MonoBehaviour
     public static float text_move_speed = 3f;
     private string display_message;
     private TextMesh text_mesh;
+    private static Color default_color = Color.white;
     #endregion
     #region EVENTS
     public static event System.EventHandler<MonobehaviourEventArgs> RequestAlignToCameraAnglesEvent;
@@ -24,33 +25,47 @@ public class Text_Bubble : MonoBehaviour
     {
         if(text_mesh == null)
             text_mesh = gameObject.AddComponent<TextMesh>();
-        text_mesh.color = Color.yellow;
+        text_mesh.color = default_color;
         RequestAlignToCameraAnglesEvent?.Invoke(this, new MonobehaviourEventArgs(this));
     }
     #endregion
 
-    public static Text_Bubble CreateTemporaryTextBubble(string message, float duration, GameObject parent)
+    #region CreateTemporaryTextBubble OVERLOADS
+    //Helper Method(s):
+    private static Text_Bubble CreateTemporaryTextBubble(string message, float duration)
     {
-        GameObject goj = new GameObject();
+        GameObject goj = new GameObject("Text Bubble");
         Text_Bubble txt = goj.AddComponent<Text_Bubble>();
-
-        goj.transform.SetParent(parent.transform);
-
         txt.RemoveAfterSeconds(duration);
         txt.UpdateTextMessage(message);
+        return txt;
+    }
+    //Public Methods:
+    public static Text_Bubble CreateTemporaryTextBubble(string message, float duration, GameObject parent)
+    {
+        Text_Bubble txt = CreateTemporaryTextBubble(message, duration);
+        txt.gameObject.transform.SetParent(parent.transform);
+        return txt;
+    }
+    public static Text_Bubble CreateTemporaryTextBubble(string message, float duration, GameObject parent, Color color)
+    {
+        Text_Bubble txt = CreateTemporaryTextBubble(message, duration, parent);
+        txt.text_mesh.color = color;
         return txt;
     }
     public static Text_Bubble CreateTemporaryTextBubble(string message, float duration, Vector3 position)
     {
-        GameObject goj = new GameObject();
-        Text_Bubble txt = goj.AddComponent<Text_Bubble>();
-
-        goj.transform.position = position;
-
-        txt.RemoveAfterSeconds(duration);
-        txt.UpdateTextMessage(message);
+        Text_Bubble txt = CreateTemporaryTextBubble(message, duration);
+        txt.gameObject.transform.position = position;
         return txt;
     }
+    public static Text_Bubble CreateTemporaryTextBubble(string message, float duration, Vector3 position, Color color)
+    {
+        Text_Bubble txt = CreateTemporaryTextBubble(message, duration, position);
+        txt.text_mesh.color = color;
+        return txt;
+    }
+    #endregion
 
     void UpdateTextMessage(string message)
     {

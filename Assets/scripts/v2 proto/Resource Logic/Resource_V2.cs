@@ -22,10 +22,13 @@ public class Resource_V2 : MonoBehaviour
     public ResourceType resource_name;
     public int resource_amount;
     public Rigidbody attached_rigidbody;
+    public Color pickup_text_color;
     #endregion
     #region INIT
     private void Awake()
     {
+        if (pickup_text_color == null) pickup_text_color = Color.white;
+
         attached_rigidbody = GetComponent<Rigidbody>();
         //create a rigidbody if there is not one already on the resource
         if(attached_rigidbody == null)
@@ -83,8 +86,8 @@ public class Resource_V2 : MonoBehaviour
     //TODO: 
     private void ResourceCollectTextBalloon()
     {
-        string msg = "+" + resource_amount.ToString() + " " + GetResourceTypeString(resource_name);
-        Text_Bubble.CreateTemporaryTextBubble(msg, pickup_message_duration, gameObject.transform.position);
+        string msg = "+" + resource_amount.ToString()/* + " " + GetResourceTypeString(resource_name)*/; //kinda lengthy to include name. Removing for now
+        Text_Bubble.CreateTemporaryTextBubble(msg, pickup_message_duration, gameObject.transform.position, pickup_text_color);
     }
 
     IEnumerator AutoPickupTimer()

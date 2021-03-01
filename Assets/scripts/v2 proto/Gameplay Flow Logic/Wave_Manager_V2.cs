@@ -9,6 +9,8 @@ public class Wave_Manager_V2 : MonoBehaviour
 
     #region EVENTS
     public static event System.EventHandler<System.EventArgs> AllWavesCompletedEvent;
+    public static event System.EventHandler<System.EventArgs> WaveStartEvent;
+    public static event System.EventHandler<System.EventArgs> WaveEndEvent;
     #endregion
     #region MEMBERS
     //list of list of prefabs
@@ -55,6 +57,7 @@ public class Wave_Manager_V2 : MonoBehaviour
         {
             Debug.Log("Wave manager: starting wave");
             flag_wave_in_progress = true; //I'll bet its safer to leave this here 
+            WaveStartEvent?.Invoke(this, System.EventArgs.Empty);
             StartCoroutine(ContinueWave(wave_list[cur_wave_index]));
         }
     }
@@ -90,10 +93,11 @@ public class Wave_Manager_V2 : MonoBehaviour
 
         StartCoroutine(CheckForWaveEnd());
     }
+    //TODO: refactor CheckForEnemiesAlive to be less dumb
     IEnumerator CheckForWaveEnd()
     {
         Debug.Log("WaveManager: Check for wave end");
-        while (CheckForEnemiesAlive())
+        while (CheckForEnemiesAlive()) //Can impl this better
         {
             yield return new WaitForSeconds(.5f);
         }
@@ -102,12 +106,17 @@ public class Wave_Manager_V2 : MonoBehaviour
         {
             Debug.Log("Wave manager: wave complete!");
             cur_wave_index++;
+
+
+            if(cur_wave_index >= wave_list.Count)
+            {
+                Debug.Log("Wave manager: all waves completed successfully!");
+                AllWavesCompletedEvent?.Invoke(this, System.EventArgs.Empty);
+                GameOverHandler.DoGameWin();
+            }
         }
-        else
-        {
-            Debug.Log("Wave manager: all waves completed successfully!");
-            AllWavesCompletedEvent?.Invoke(this, System.EventArgs.Empty);
-        }
+
+        WaveEndEvent?.Invoke(this, System.EventArgs.Empty);
         flag_wave_in_progress = false;
     }
 }
