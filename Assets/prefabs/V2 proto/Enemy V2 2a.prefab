@@ -108,14 +108,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resource_kill_award:
   - {fileID: 5994096026882669570, guid: cd91af7d5970c5748ab00d97a93b31e7, type: 3}
-  - {fileID: 5994096026882669570, guid: cd91af7d5970c5748ab00d97a93b31e7, type: 3}
-  - {fileID: 5994096026882669570, guid: cd91af7d5970c5748ab00d97a93b31e7, type: 3}
-  - {fileID: 5994096026882669570, guid: cd91af7d5970c5748ab00d97a93b31e7, type: 3}
   waypoints_list: {fileID: 0}
+  enemy_name: Beefy Egg Guy
   speed_max: 4
   hp_max: 13
   current_hp: 0
   current_speed: 0
   spawn_delay: 0
   spawn_cooldown: 0.5
+  damage_to_player: 2
   cur_waypoint_index: 0

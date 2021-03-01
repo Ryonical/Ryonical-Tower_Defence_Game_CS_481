@@ -107,12 +107,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resource_kill_award:
-  - {fileID: 5994096026882669570, guid: cd91af7d5970c5748ab00d97a93b31e7, type: 3}
+  - {fileID: 5679202765293577605, guid: 4fef6d1ba611f4a4f9cf42e67b9da417, type: 3}
+  - {fileID: 5679202765293577605, guid: 4fef6d1ba611f4a4f9cf42e67b9da417, type: 3}
   waypoints_list: {fileID: 0}
+  enemy_name: Tomato
   speed_max: 7
   hp_max: 4
   current_hp: 0
   current_speed: 0
   spawn_delay: 0
   spawn_cooldown: 0.4
+  damage_to_player: 1
   cur_waypoint_index: 0
