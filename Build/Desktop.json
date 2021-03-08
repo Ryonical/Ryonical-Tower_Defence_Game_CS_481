@@ -1,7 +1,7 @@
 {
-"companyName": "DefaultCompany",
-"productName": "CS481 Project 1",
-"productVersion": "0.1",
+"companyName": "Quizzical Mouse",
+"productName": "Colony Crisis",
+"productVersion": "1.0",
 "dataUrl": "Desktop.data.unityweb",
 "wasmCodeUrl": "Desktop.wasm.code.unityweb",
 "wasmFrameworkUrl": "Desktop.wasm.framework.unityweb",
