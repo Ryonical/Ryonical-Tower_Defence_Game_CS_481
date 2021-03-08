@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7923825446821456544}
   - component: {fileID: 7923825446821456549}
   m_Layer: 0
-  m_Name: resource 2a (lives)
+  m_Name: lives 1ct
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,7 +110,7 @@ MonoBehaviour:
   resource_name: 0
   resource_amount: 1
   attached_rigidbody: {fileID: 0}
-  pickup_text_color: {r: 1, g: 0.57381195, b: 0.5518868, a: 1}
+  pickup_text_color: {r: 0.8396226, g: 0.18450993, b: 0.1544589, a: 1}
 --- !u!54 &7923825446821456549
 Rigidbody:
   m_ObjectHideFlags: 0
